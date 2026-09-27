@@ -11,6 +11,7 @@ namespace InGame.Player.Action
     public class PlayerActionHandler : MonoBehaviour
     {
         [SerializeField] private PlayerAnimationPlayer _animationPlayer;
+        [SerializeField] private PlayerMovement _playerMovement;
         [SerializeReference, SubclassSelector] private PlayerActionBase[] _actions;
 
         private PlayerActionBase _currentAction;
@@ -18,7 +19,7 @@ namespace InGame.Player.Action
 
         private void Start()
         {
-            _actionContext = new(_animationPlayer, this.gameObject);
+            _actionContext = new(_animationPlayer, _playerMovement, this.gameObject);
             InputManager.Attack.Where(x => x).Subscribe(_ => OnActionKeyClick(ActionKeyType.Attack));//.AddTo(this);
         }
 
@@ -27,7 +28,7 @@ namespace InGame.Player.Action
             if (_currentAction == null) return;
 
             //ActionÇ™èIóπÇµÇƒÇ¢ÇÈ
-            if(_currentAction.State == PlayerActionBase.ActionState.End)
+            if (_currentAction.State == PlayerActionBase.ActionState.End)
             {
                 _currentAction.EndAction();
                 _currentAction = null;
@@ -38,10 +39,10 @@ namespace InGame.Player.Action
 
         private void OnActionKeyClick(ActionKeyType type)
         {
-            foreach(var action in _actions)
+            foreach (var action in _actions)
             {
                 //é¿çsèåèÇ™ëµÇ¡ÇΩ
-                if(action.ActionKey == type && action.CanStart(_actionContext))
+                if (action.ActionKey == type && action.CanStart(_actionContext))
                 {
                     _currentAction = action;
                     _currentAction.StartAction(_actionContext);

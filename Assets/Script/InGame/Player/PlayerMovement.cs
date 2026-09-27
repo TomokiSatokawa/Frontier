@@ -8,19 +8,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _rotationSpeed;
+    public bool IgnoreInput;
     private Vector3 _velocity;
     public float MoveAmount { get; private set; }
 
     public void Update()
     {
+        Vector3 moveInput = InputManager.Move;
+
+        if (IgnoreInput)
+            moveInput = Vector3.zero;
+
         float moveSpeed = InputManager.Dash > 0f ? _dashSpeed : _moveSpeed;
 
-        Vector3 cameraInput = GetCameraDirection(InputManager.Move);
+        Vector3 cameraInput = GetCameraDirection(moveInput);
 
         RotateTowards(cameraInput, _rotationSpeed);
         _velocity = cameraInput * moveSpeed;
 
-        float inputMagnitude = InputManager.Move.magnitude;
+        float inputMagnitude = moveInput.magnitude;
         MoveAmount = inputMagnitude + (inputMagnitude > 0f ? InputManager.Dash : 0);
         _rigidbody.linearVelocity = _velocity;
     }
@@ -45,6 +51,6 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards( transform.rotation,    targetRotation, rotateSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
     }
 }
