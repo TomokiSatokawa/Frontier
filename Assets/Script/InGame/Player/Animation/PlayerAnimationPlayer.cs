@@ -97,12 +97,17 @@ namespace InGame.Player.Motion
 
             _layerMixer.SetInputWeight((int)AnimationLayer.Base, 0f);
             _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f);
+
             WaitDelete(clip.length).Forget();
         }
 
         private async UniTask WaitDelete(float duration)
         {
             await UniTask.WaitForSeconds(duration);
+
+            if (_layerMixer.GetInput((int)AnimationLayer.TopLayer).IsValid())
+                _layerMixer.DisconnectInput((int)AnimationLayer.TopLayer);
+
             _layerMixer.SetInputWeight((int)AnimationLayer.Base, 1f);
             _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 0f);
         }

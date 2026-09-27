@@ -22,7 +22,7 @@ MonoBehaviour:
       rid: 2115541215392563518
   - _motionType: 1
     _idleClip:
-      rid: 2115541229469434090
+      rid: 2115541229469434185
     _walkClip:
       rid: 2115541215392563522
     _runClip:
@@ -50,7 +50,7 @@ MonoBehaviour:
       type: {class: SwordMotion, ns: Common, asm: Assembly-CSharp}
       data:
         _type: 2
-    - rid: 2115541229469434090
+    - rid: 2115541229469434185
       type: {class: BasicMotion, ns: Common, asm: Assembly-CSharp}
       data:
         _type: 0
