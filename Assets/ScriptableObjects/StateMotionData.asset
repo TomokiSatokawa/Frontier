@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998193cfd84c8bc46817a076460d6dc8, type: 3}
+  m_Name: StateMotionData
+  m_EditorClassIdentifier: Assembly-CSharp::StateMotionData
+  _motionGroups:
+  - _motionType: 0
+    _idleClip:
+      rid: 2115541215392563516
+    _walkClip:
+      rid: 2115541215392563517
+    _runClip:
+      rid: 2115541215392563518
+  - _motionType: 1
+    _idleClip:
+      rid: 2115541229469434185
+    _walkClip:
+      rid: 2115541215392563522
+    _runClip:
+      rid: 2115541215392563523
+  references:
+    version: 2
+    RefIds:
+    - rid: 2115541215392563516
+      type: {class: BasicMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 0
+    - rid: 2115541215392563517
+      type: {class: BasicMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 1
+    - rid: 2115541215392563518
+      type: {class: BasicMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 2
+    - rid: 2115541215392563522
+      type: {class: SwordMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 1
+    - rid: 2115541215392563523
+      type: {class: SwordMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 2
+    - rid: 2115541229469434185
+      type: {class: BasicMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 0

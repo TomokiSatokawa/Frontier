@@ -104,3 +104,12 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+Assets/3DAsset/FreeSwords/
+Assets/Kevin Iglesias/
+Assets/Animation/
+Assets/material/
+Assets/Player.vrm1.Assets/
+Assets/Player.vrm1.Materials/
+Assets/Player.vrm1.Textures/
+Packages/
+Assets/3DAsset/
