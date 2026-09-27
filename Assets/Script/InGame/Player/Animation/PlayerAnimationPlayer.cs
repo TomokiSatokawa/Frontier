@@ -1,4 +1,6 @@
 using System;
+using Common;
+using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -72,60 +74,88 @@ namespace InGame.Player.Motion
             var walk = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.WalkClip));
             var run = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.RunClip));
 
+            if (_baseMixer.GetInput(0).IsValid())
+                _baseMixer.DisconnectInput(0);
+
+            if (_baseMixer.GetInput(1).IsValid())
+                _baseMixer.DisconnectInput(1);
+
+            if (_baseMixer.GetInput(2).IsValid())
+                _baseMixer.DisconnectInput(2);
+
             _baseMixer.ConnectInput(0, idle, 0);
             _baseMixer.ConnectInput(1, walk, 0);
             _baseMixer.ConnectInput(2, run, 0);
         }
 
-        [Serializable]
-        public class BaseAnimation
+        public void PlayOneShot(EnumGroupBase groupBase)
         {
-            [SerializeField] private PlayerMovement _movement;
-            [SerializeField] private BlendData _blendData;
+            var clip = _container.GetAnimation(groupBase);
+            var playable = AnimationClipPlayable.Create(_graph, clip);
 
-            private float _blendPosition;
-            private float _blendStart;
-            private float _blendTarget;
-            private float _blendTime;
+            _layerMixer.ConnectInput((int)AnimationLayer.TopLayer, playable, 0);
 
-            public void Tick(AnimationMixerPlayable baseMixer)
+            _layerMixer.SetInputWeight((int)AnimationLayer.Base, 0f);
+            _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f);
+            WaitDelete(clip.length).Forget();
+        }
+
+        private async UniTask WaitDelete(float duration)
+        {
+            await UniTask.WaitForSeconds(duration);
+            _layerMixer.SetInputWeight((int)AnimationLayer.Base, 1f);
+            _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 0f);
+        }
+    }
+
+    [Serializable]
+    public class BaseAnimation
+    {
+        [SerializeField] private PlayerMovement _movement;
+        [SerializeField] private BlendData _blendData;
+
+        private float _blendPosition;
+        private float _blendStart;
+        private float _blendTarget;
+        private float _blendTime;
+
+        public void Tick(AnimationMixerPlayable baseMixer)
+        {
+            var target = Mathf.Clamp(_movement.MoveAmount, 0f, 2f);
+
+            if (!Mathf.Approximately(target, _blendTarget))
             {
-                var target = Mathf.Clamp(_movement.MoveAmount, 0f, 2f);
-
-                if (!Mathf.Approximately(target, _blendTarget))
-                {
-                    _blendStart = _blendPosition;
-                    _blendTarget = target;
-                    _blendTime = 0f;
-                }
-
-                if (!Mathf.Approximately(_blendStart, _blendTarget))
-                {
-                    _blendTime += Time.deltaTime;
-
-                    var t = Mathf.Clamp01(_blendTime / _blendData.Duration);
-                    t = _blendData.Curve.Evaluate(t);
-
-                    _blendPosition = Mathf.Lerp(
-                        _blendStart,
-                        _blendTarget,
-                        t
-                    );
-                }
-
-                SetBlendWeight(baseMixer, _blendPosition);
+                _blendStart = _blendPosition;
+                _blendTarget = target;
+                _blendTime = 0f;
             }
 
-            private void SetBlendWeight(AnimationMixerPlayable baseMixer, float blendPosition)
+            if (!Mathf.Approximately(_blendStart, _blendTarget))
             {
-                var idleWeight = Mathf.Clamp01(1f - blendPosition);
-                var walkWeight = 1f - Mathf.Abs(blendPosition - 1f);
-                var runWeight = Mathf.Clamp01(blendPosition - 1f);
+                _blendTime += Time.deltaTime;
 
-                baseMixer.SetInputWeight(0, idleWeight);
-                baseMixer.SetInputWeight(1, walkWeight);
-                baseMixer.SetInputWeight(2, runWeight);
+                var t = Mathf.Clamp01(_blendTime / _blendData.Duration);
+                t = _blendData.Curve.Evaluate(t);
+
+                _blendPosition = Mathf.Lerp(
+                    _blendStart,
+                    _blendTarget,
+                    t
+                );
             }
+
+            SetBlendWeight(baseMixer, _blendPosition);
+        }
+
+        private void SetBlendWeight(AnimationMixerPlayable baseMixer, float blendPosition)
+        {
+            var idleWeight = Mathf.Clamp01(1f - blendPosition);
+            var walkWeight = 1f - Mathf.Abs(blendPosition - 1f);
+            var runWeight = Mathf.Clamp01(blendPosition - 1f);
+
+            baseMixer.SetInputWeight(0, idleWeight);
+            baseMixer.SetInputWeight(1, walkWeight);
+            baseMixer.SetInputWeight(2, runWeight);
         }
     }
 }

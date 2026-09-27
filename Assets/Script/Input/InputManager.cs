@@ -1,3 +1,5 @@
+using System;
+using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +9,8 @@ namespace PlayerInput
     {
         public static Vector2 Move;
         public static  float Dash;
+        private static ReactiveProperty<bool> _attack = new();
+        public static ReadOnlyReactiveProperty<bool> Attack => _attack;
 
         private GameInput _gameInput;
 
@@ -14,10 +18,14 @@ namespace PlayerInput
         {
             _gameInput = new();
 
-            _gameInput.Player.Move.performed += OnMove;
-            _gameInput.Player.Move.canceled += OnMove;
-            _gameInput.Player.Dash.performed += OnDash;
-            _gameInput.Player.Dash.canceled += OnDash;
+            SetAction(_gameInput.Player.Move, OnMove);
+            SetAction(_gameInput.Player.Dash, OnDash);
+            SetAction(_gameInput.Player.Attack, OnAttack);
+        }
+        private void SetAction(InputAction action , Action<InputAction.CallbackContext> callback)
+        {
+            action.performed += callback;
+            action.canceled += callback;
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -29,6 +37,12 @@ namespace PlayerInput
         {
             Dash = context.ReadValue<float>();
         }
+
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            _attack.Value = context.ReadValueAsButton();
+        }
+
         private void OnEnable()
         {
             _gameInput.Player.Enable();

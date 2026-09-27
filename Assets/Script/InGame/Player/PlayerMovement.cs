@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
 
         float inputMagnitude = InputManager.Move.magnitude;
         MoveAmount = inputMagnitude + (inputMagnitude > 0f ? InputManager.Dash : 0);
-        Debug.Log(MoveAmount);
         _rigidbody.linearVelocity = _velocity;
     }
 
