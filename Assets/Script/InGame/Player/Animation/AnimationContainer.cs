@@ -12,8 +12,8 @@ namespace InGame.Player.Motion
         [SerializeField] private AnimationData<BasicAnimationType>[] _basicClip;
         [SerializeField] private AnimationData<SwordAnimationType>[] _swordClip;
 
-        private Dictionary<EnumID, AnimationClip> _animationDictionary = new();
-        public IReadOnlyList<AnimationClip> AnimationList => _animationDictionary.Values.ToList();
+        private Dictionary<EnumID, IReadOnlyAnimationData> _animationDictionary = new();
+        public IReadOnlyList<IReadOnlyAnimationData> AnimationList => _animationDictionary.Values.ToList();
 
         public void Initialize()
         {
@@ -21,16 +21,15 @@ namespace InGame.Player.Motion
             AddDictionary(new SwordMotion(), _swordClip);
         }
 
-        public AnimationClip GetAnimation(EnumGroupBase enumGroup)
+        public IReadOnlyAnimationData GetAnimation(EnumGroupBase enumGroup)
         {
             return GetAnimation(enumGroup.Create());
         }
 
-        public AnimationClip GetAnimation(EnumID id)
+        public IReadOnlyAnimationData GetAnimation(EnumID id)
         {
             if (_animationDictionary.TryGetValue(id, out var result))
             {
-
                 return result;
             }
 
@@ -43,16 +42,28 @@ namespace InGame.Player.Motion
             foreach (var clipData in clips)
             {
                 EnumID id = EnumID.Create(group, clipData.Name);
-                _animationDictionary.Add(id, clipData.Clip);
+                _animationDictionary.Add(id, clipData);
             }
         }
 
-        [System.Serializable]
-        public class AnimationData<T> where T : Enum
+        public interface IReadOnlyAnimationData
         {
-            public T Name;
-            public AnimationClip Clip;
-            public BlendData BlendData;
+            public AnimationClip Clip { get; }
+            public BlendData Blend { get; }
+        }
+
+        [System.Serializable]
+        public class AnimationData<T> : IReadOnlyAnimationData where T : Enum
+        {
+            [SerializeField] private T _name;
+            [SerializeField] private AnimationClip _clip;
+            [SerializeField] private BlendData _blendData;
+
+            public T Name => _name;
+            public AnimationClip Clip => _clip;
+            public BlendData Blend => _blendData;
+
+
         }
     }
 
@@ -68,8 +79,8 @@ namespace InGame.Player.Motion
         Idol, Walk, Run
     }
 
-    public enum SwordAnimationType: byte
+    public enum SwordAnimationType : byte
     {
-        Idol, Walk, Run,Attack
+        Idol, Walk, Run, Attack
     }
 }

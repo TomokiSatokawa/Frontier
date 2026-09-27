@@ -13,71 +13,179 @@ MonoBehaviour:
   m_Name: AnimationContainer
   m_EditorClassIdentifier: Assembly-CSharp::InGame.Player.Motion.AnimationContainer
   _basicClip:
-  - Name: 0
-    Clip: {fileID: 7400000, guid: b26ee3b9a9e99724ebebee68b77927c2, type: 2}
-    BlendData:
-      Duration: 0
+  - _name: 0
+    _clip: {fileID: 7400000, guid: b26ee3b9a9e99724ebebee68b77927c2, type: 2}
+    _blendData:
+      Duration: 0.3
       Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-  - Name: 1
-    Clip: {fileID: 7400000, guid: 07f56c364290e304799392478301f224, type: 2}
-    BlendData:
-      Duration: 0
+  - _name: 1
+    _clip: {fileID: 7400000, guid: 07f56c364290e304799392478301f224, type: 2}
+    _blendData:
+      Duration: 0.3
       Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-  - Name: 2
-    Clip: {fileID: 7400000, guid: 2b6ccbe9034e8554bbbc105e480cd0f5, type: 2}
-    BlendData:
-      Duration: 0
+  - _name: 2
+    _clip: {fileID: 7400000, guid: 2b6ccbe9034e8554bbbc105e480cd0f5, type: 2}
+    _blendData:
+      Duration: 0.3
       Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
   _swordClip:
-  - Name: 0
-    Clip: {fileID: -203655887218126122, guid: 28dce25fc31094c4a817a699ffc9c21f, type: 3}
-    BlendData:
-      Duration: 0
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - Name: 1
-    Clip: {fileID: -203655887218126122, guid: b570d0aa36e6b4846976f58694fbe344, type: 3}
-    BlendData:
-      Duration: 0
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - Name: 2
-    Clip: {fileID: -203655887218126122, guid: c5a43015849797c4bb76c8eb61d6a498, type: 3}
-    BlendData:
-      Duration: 0
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - Name: 3
-    Clip: {fileID: -203655887218126122, guid: 2477eaa9d03943e4794c4b33c6ccf421, type: 3}
-    BlendData:
+  - _name: 0
+    _clip: {fileID: -203655887218126122, guid: 28dce25fc31094c4a817a699ffc9c21f, type: 3}
+    _blendData:
       Duration: 0.3
+      Curve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - _name: 1
+    _clip: {fileID: -203655887218126122, guid: b570d0aa36e6b4846976f58694fbe344, type: 3}
+    _blendData:
+      Duration: 0.3
+      Curve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - _name: 2
+    _clip: {fileID: -203655887218126122, guid: c5a43015849797c4bb76c8eb61d6a498, type: 3}
+    _blendData:
+      Duration: 0.3
+      Curve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - _name: 3
+    _clip: {fileID: -203655887218126122, guid: 2477eaa9d03943e4794c4b33c6ccf421, type: 3}
+    _blendData:
+      Duration: 0.5
       Curve:
         serializedVersion: 2
         m_Curve:

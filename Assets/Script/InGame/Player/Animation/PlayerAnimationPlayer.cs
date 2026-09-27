@@ -70,9 +70,9 @@ namespace InGame.Player.Motion
             if (group == null)
                 return;
 
-            var idle = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.IdleClip));
-            var walk = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.WalkClip));
-            var run = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.RunClip));
+            var idle = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.IdleClip).Clip);
+            var walk = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.WalkClip).Clip);
+            var run = AnimationClipPlayable.Create(_graph, _container.GetAnimation(group.RunClip).Clip);
 
             if (_baseMixer.GetInput(0).IsValid())
                 _baseMixer.DisconnectInput(0);
@@ -90,25 +90,58 @@ namespace InGame.Player.Motion
 
         public void PlayOneShot(EnumGroupBase groupBase)
         {
-            var clip = _container.GetAnimation(groupBase);
-            var playable = AnimationClipPlayable.Create(_graph, clip);
-
-            _layerMixer.ConnectInput((int)AnimationLayer.TopLayer, playable, 0);
-
-            _layerMixer.SetInputWeight((int)AnimationLayer.Base, 0f);
-            _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f);
-
-            WaitDelete(clip.length).Forget();
+            PlayOneShotAsync(groupBase).Forget();
         }
 
-        private async UniTask WaitDelete(float duration)
+        private async UniTask PlayOneShotAsync(EnumGroupBase groupBase)
         {
-            await UniTask.WaitForSeconds(duration);
+            var animationData = _container.GetAnimation(groupBase);
+            var playable = AnimationClipPlayable.Create(_graph, animationData.Clip);
+
 
             if (_layerMixer.GetInput((int)AnimationLayer.TopLayer).IsValid())
                 _layerMixer.DisconnectInput((int)AnimationLayer.TopLayer);
 
-            _layerMixer.SetInputWeight((int)AnimationLayer.Base, 1f);
+            _layerMixer.ConnectInput((int)AnimationLayer.TopLayer, playable, 0);
+
+            //_layerMixer.SetInputWeight((int)AnimationLayer.Base, 1f);
+            _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 0f);
+
+            float elapsedTime = 0f;
+            float clipLength = animationData.Clip.length;
+            float blendDuration = animationData.Blend.Duration;
+
+            while (elapsedTime < clipLength)
+            {
+                // ŠJŽnBlend
+                if (elapsedTime < blendDuration)
+                {
+                    float normalizedTime = elapsedTime / blendDuration;
+                    float curveValue = animationData.Blend.Curve.Evaluate(normalizedTime);
+
+                    _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, curveValue);
+                }
+                // I—¹Blend
+                else if (elapsedTime >= clipLength - blendDuration)
+                {
+                    float normalizedTime = (elapsedTime - (clipLength - blendDuration)) / blendDuration;
+                    float curveValue = animationData.Blend.Curve.Evaluate(normalizedTime);
+
+                    _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f - curveValue);
+                }
+                // Blend‚È‚µ
+                else
+                {
+                    _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f);
+                }
+
+                await UniTask.Yield();
+                elapsedTime += Time.deltaTime;
+            }
+
+            if (_layerMixer.GetInput((int)AnimationLayer.TopLayer).IsValid())
+                _layerMixer.DisconnectInput((int)AnimationLayer.TopLayer);
+
             _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 0f);
         }
     }
