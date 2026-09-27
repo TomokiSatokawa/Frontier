@@ -18,7 +18,7 @@ namespace InGame.Player.Action
         /// </summary>
         public virtual bool CanStart(ActionContext actionContext)
         {
-            return true;
+            return State == ActionState.Idle;
         }
 
         /// <summary>
@@ -56,6 +56,14 @@ namespace InGame.Player.Action
         {
             State = ActionState.End;
             _elapsedTime = 0f;
+        }
+
+        /// <summary>
+        /// アクション終了時に呼び出し
+        /// </summary>
+        public void EndAction()
+        {
+            State = ActionState.Idle;
         }
 
         public enum ActionState

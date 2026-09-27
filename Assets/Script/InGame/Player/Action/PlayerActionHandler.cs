@@ -29,6 +29,7 @@ namespace InGame.Player.Action
             //Action‚ªI—¹‚µ‚Ä‚¢‚é
             if(_currentAction.State == PlayerActionBase.ActionState.End)
             {
+                _currentAction.EndAction();
                 _currentAction = null;
                 return;
             }

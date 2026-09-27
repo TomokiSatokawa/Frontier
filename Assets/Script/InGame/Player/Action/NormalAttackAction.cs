@@ -1,13 +1,23 @@
 using Common;
 using InGame.Player.Action;
+using InGame.Player.Motion;
 using UnityEngine;
 
 [System.Serializable]
 public class NormalAttackAction : PlayerActionBase
 {
     [SerializeReference] private EnumGroupBase _attackMotion;
+
+    private IReadOnlyAnimationPlaybackState _attackAnimationState;
     protected override void OnStart(ActionContext actionContext)
     {
-        actionContext.AnimationPlayer.PlayOneShot(_attackMotion);
+        _attackAnimationState =  actionContext.AnimationPlayer.PlayOneShot(_attackMotion);
+    }
+
+    protected override void OnUpdate(ActionContext actionContext)
+    {
+        //アニメーションが終了
+        if (!_attackAnimationState.IsPlaying)
+            RequestEnd();
     }
 }

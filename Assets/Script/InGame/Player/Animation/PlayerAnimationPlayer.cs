@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Common;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -14,6 +15,8 @@ namespace InGame.Player.Motion
         [SerializeField] private AnimationContainer _container;
         [SerializeField] private StateMotionData _stateMotionData;
         [SerializeField] private BaseAnimation _baseAnimation;
+
+        private CancellationTokenSource _topLayerToken;
         private enum AnimationLayer
         {
             Base, TopLayer
@@ -61,6 +64,8 @@ namespace InGame.Player.Motion
         private void OnDestroy()
         {
             _graph.Destroy();
+            _topLayerToken?.Cancel();
+            _topLayerToken?.Dispose();
         }
 
         public void UpdateBaseClip(MotionType type)
@@ -88,62 +93,96 @@ namespace InGame.Player.Motion
             _baseMixer.ConnectInput(2, run, 0);
         }
 
-        public void PlayOneShot(EnumGroupBase groupBase)
+        public IReadOnlyAnimationPlaybackState PlayOneShot(EnumGroupBase groupBase)
         {
-            PlayOneShotAsync(groupBase).Forget();
+            //既に実行中だった場合はキャンセル
+            _topLayerToken?.Cancel();
+            _topLayerToken?.Dispose();
+            _topLayerToken = new CancellationTokenSource();
+            var playbackState = new AnimationPlaybackState();
+            PlayOneShotAsync(groupBase ,playbackState).Forget();
+            return playbackState;
         }
 
-        private async UniTask PlayOneShotAsync(EnumGroupBase groupBase)
+        private async UniTask PlayOneShotAsync(EnumGroupBase groupBase,AnimationPlaybackState playbackState)
         {
             var animationData = _container.GetAnimation(groupBase);
             var playable = AnimationClipPlayable.Create(_graph, animationData.Clip);
 
-
-            if (_layerMixer.GetInput((int)AnimationLayer.TopLayer).IsValid())
-                _layerMixer.DisconnectInput((int)AnimationLayer.TopLayer);
-
+            //単発クリップを専用レイヤーにセット
+            TryDisconnect(_layerMixer, (int)AnimationLayer.TopLayer);
             _layerMixer.ConnectInput((int)AnimationLayer.TopLayer, playable, 0);
-
-            //_layerMixer.SetInputWeight((int)AnimationLayer.Base, 1f);
             _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 0f);
 
             float elapsedTime = 0f;
             float clipLength = animationData.Clip.length;
             float blendDuration = animationData.Blend.Duration;
-
-            while (elapsedTime < clipLength)
+            try
             {
-                // 開始Blend
-                if (elapsedTime < blendDuration)
+                //Animation中待機処理
+                while (elapsedTime < clipLength)
                 {
-                    float normalizedTime = elapsedTime / blendDuration;
-                    float curveValue = animationData.Blend.Curve.Evaluate(normalizedTime);
+                    // 開始Blend
+                    if (elapsedTime < blendDuration)
+                    {
+                        float normalizedTime = elapsedTime / blendDuration;
+                        float curveValue = animationData.Blend.Curve.Evaluate(normalizedTime);
 
-                    _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, curveValue);
-                }
-                // 終了Blend
-                else if (elapsedTime >= clipLength - blendDuration)
-                {
-                    float normalizedTime = (elapsedTime - (clipLength - blendDuration)) / blendDuration;
-                    float curveValue = animationData.Blend.Curve.Evaluate(normalizedTime);
+                        _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, curveValue);
+                    }
+                    // 終了Blend
+                    else if (elapsedTime >= clipLength - blendDuration)
+                    {
+                        float normalizedTime = (elapsedTime - (clipLength - blendDuration)) / blendDuration;
+                        float curveValue = animationData.Blend.Curve.Evaluate(normalizedTime);
 
-                    _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f - curveValue);
-                }
-                // Blendなし
-                else
-                {
-                    _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f);
-                }
+                        _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f - curveValue);
+                    }
+                    // Blendなし
+                    else
+                    {
+                        _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 1f);
+                    }
 
-                await UniTask.Yield();
-                elapsedTime += Time.deltaTime;
+                    await UniTask.Yield(cancellationToken: _topLayerToken.Token);
+                    elapsedTime += Time.deltaTime;
+                    playbackState.Duration = elapsedTime;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+
             }
 
-            if (_layerMixer.GetInput((int)AnimationLayer.TopLayer).IsValid())
-                _layerMixer.DisconnectInput((int)AnimationLayer.TopLayer);
-
+            //元に戻す
+            TryDisconnect(_layerMixer, (int)AnimationLayer.TopLayer);
             _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 0f);
+            playbackState.IsPlaying = false;
         }
+
+        private void TryDisconnect(Playable playable, int inputPot)
+        {
+            if (playable.GetInput(inputPot).IsValid())
+                playable.DisconnectInput(inputPot);
+        }
+    }
+
+    public interface IReadOnlyAnimationPlaybackState
+    {
+        public bool IsPlaying { get; }
+        public float Duration { get; }
+    }
+
+    public class AnimationPlaybackState : IReadOnlyAnimationPlaybackState
+    {
+        public AnimationPlaybackState()
+        {
+            IsPlaying = true;
+            Duration = 0f;
+        }
+
+        public bool IsPlaying { get; set; }
+        public float Duration { get; set; }
     }
 
     [Serializable]
