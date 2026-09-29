@@ -6,6 +6,7 @@ namespace InGame.Item
     public class ItemBase : MonoBehaviour, ICollectable
     {
         [SerializeField] private Transform _pickUpPosition;
+        [SerializeField] private ItemDefinition _itemData;
 
         public Vector3 GetPickUpPosition()
         {
