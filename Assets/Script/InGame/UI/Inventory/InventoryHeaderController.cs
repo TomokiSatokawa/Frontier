@@ -11,7 +11,7 @@ namespace InGame.UI.Inventory
     {
         [SerializeField] private InventoryHeaderView[] _buttons;
 
-        private ReactiveProperty<InventoryItemLayer> _layer;
+        private ReactiveProperty<InventoryItemLayer> _layer = new();
         public ReadOnlyReactiveProperty<InventoryItemLayer> Layer => _layer;
 
         private int _currentSelect = 0;
@@ -37,7 +37,7 @@ namespace InGame.UI.Inventory
 
         public void OnSelect(InventoryItemLayer layer)
         {
-            Debug.Log(layer);
+            _layer.Value = layer;
         }
     }
     public enum InventoryItemLayer

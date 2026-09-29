@@ -5,6 +5,7 @@ namespace InGame.Item
     /// <summary>
     /// 内部で使用するアイテムデータ
     /// </summary>
+    [System.Serializable]
     public class ItemData
     {
         public ItemData(ItemDefinition definition)
@@ -15,10 +16,10 @@ namespace InGame.Item
                 return;
             }
 
-            Definition = definition;
+            _definition = definition;
         }
-
-        public ItemDefinition Definition { get; }
+        [SerializeField] private ItemDefinition _definition;
+        public ItemDefinition Definition => _definition;
 
         public override bool Equals(object obj)
         {

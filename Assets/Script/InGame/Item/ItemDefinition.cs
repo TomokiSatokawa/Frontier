@@ -9,10 +9,10 @@ namespace InGame.Item
     [System.Serializable]
     public class ItemDefinition
     {
-        private int _id;
-        private string _name;
-        private int _maxStack;
-        private Sprite _image;
+        [SerializeField] private int _id;
+        [SerializeField] private string _name;
+        [SerializeField] private int _maxStack;
+        [SerializeField] private Sprite _image;
 
         public int ID => _id;
         public string Name => _name;
