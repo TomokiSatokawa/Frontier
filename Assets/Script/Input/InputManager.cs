@@ -11,9 +11,13 @@ namespace PlayerInput
         public static  float Dash;
         private static ReactiveProperty<bool> _attack = new();
         private static ReactiveProperty<bool> _interact = new();
+        private static Subject<Unit> _nextTab = new(); 
+        private static Subject<Unit> _previousTab = new(); 
 
         public static ReadOnlyReactiveProperty<bool> Attack => _attack;
         public static ReadOnlyReactiveProperty<bool> Interact => _interact;
+        public static Observable<Unit> NextTab  => _nextTab;
+        public static Observable<Unit> PreviousTab => _previousTab;
 
         private GameInput _gameInput;
 
@@ -25,6 +29,8 @@ namespace PlayerInput
             SetAction(_gameInput.Player.Dash, OnDash);
             SetAction(_gameInput.Player.Attack, OnAttack);
             SetAction(_gameInput.Player.Interact, OnInteract);
+            SetAction(_gameInput.Player.NextTab, OnNextTab);
+            SetAction(_gameInput.Player.PreviousTab, OnPreviousTab);
         }
 
         private void SetAction(InputAction action , Action<InputAction.CallbackContext> callback)
@@ -52,6 +58,20 @@ namespace PlayerInput
         {
             _interact.Value = context.ReadValueAsButton();
         }
+        
+        public void OnNextTab(InputAction.CallbackContext context)
+        {
+            if (context.ReadValueAsButton())
+            {
+                _nextTab.OnNext(Unit.Default);
+            }
+        }
+
+        public void OnPreviousTab(InputAction.CallbackContext context)
+        {
+            if (context.ReadValueAsButton())
+                _previousTab.OnNext(Unit.Default);
+        } 
 
         private void OnEnable()
         {
