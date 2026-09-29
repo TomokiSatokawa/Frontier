@@ -10,7 +10,10 @@ namespace PlayerInput
         public static Vector2 Move;
         public static  float Dash;
         private static ReactiveProperty<bool> _attack = new();
+        private static ReactiveProperty<bool> _interact = new();
+
         public static ReadOnlyReactiveProperty<bool> Attack => _attack;
+        public static ReadOnlyReactiveProperty<bool> Interact => _interact;
 
         private GameInput _gameInput;
 
@@ -21,6 +24,7 @@ namespace PlayerInput
             SetAction(_gameInput.Player.Move, OnMove);
             SetAction(_gameInput.Player.Dash, OnDash);
             SetAction(_gameInput.Player.Attack, OnAttack);
+            SetAction(_gameInput.Player.Interact, OnInteract);
         }
 
         private void SetAction(InputAction action , Action<InputAction.CallbackContext> callback)
@@ -42,6 +46,11 @@ namespace PlayerInput
         public void OnAttack(InputAction.CallbackContext context)
         {
             _attack.Value = context.ReadValueAsButton();
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            _interact.Value = context.ReadValueAsButton();
         }
 
         private void OnEnable()
