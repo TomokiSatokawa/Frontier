@@ -22,6 +22,7 @@ namespace PlayerInput
             SetAction(_gameInput.Player.Dash, OnDash);
             SetAction(_gameInput.Player.Attack, OnAttack);
         }
+
         private void SetAction(InputAction action , Action<InputAction.CallbackContext> callback)
         {
             action.performed += callback;

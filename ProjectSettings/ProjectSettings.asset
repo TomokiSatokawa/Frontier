@@ -826,7 +826,7 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Standalone: UNITY_PIPELINE_URP
+    Standalone: UNITY_PIPELINE_URP;GAIA_V3_CINEMACHINE_OR_NEWER;GAIA_INPUT_SYSTEM;UPPipeline;GAIA_2023;GAIA_MESH_PRESENT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

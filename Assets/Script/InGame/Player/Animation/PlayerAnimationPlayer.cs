@@ -167,24 +167,6 @@ namespace InGame.Player.Motion
         }
     }
 
-    public interface IReadOnlyAnimationPlaybackState
-    {
-        public bool IsPlaying { get; }
-        public float Duration { get; }
-    }
-
-    public class AnimationPlaybackState : IReadOnlyAnimationPlaybackState
-    {
-        public AnimationPlaybackState()
-        {
-            IsPlaying = true;
-            Duration = 0f;
-        }
-
-        public bool IsPlaying { get; set; }
-        public float Duration { get; set; }
-    }
-
     [Serializable]
     public class BaseAnimation
     {
