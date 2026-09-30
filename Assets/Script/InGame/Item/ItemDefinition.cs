@@ -1,3 +1,4 @@
+using InGame.UI.Inventory;
 using UnityEngine;
 
 namespace InGame.Item
@@ -13,11 +14,13 @@ namespace InGame.Item
         [SerializeField] private string _name;
         [SerializeField] private int _maxStack;
         [SerializeField] private Sprite _image;
+        [SerializeField] private InventoryItemLayer _layer;
 
         public int ID => _id;
         public string Name => _name;
         public int MaxStack => _maxStack;
         public Sprite Image => _image;//TODO:CSV‚É‚·‚éê‡AIDŒŸ“¢
+        public InventoryItemLayer Layer => _layer;
 
         public override string ToString()
         {

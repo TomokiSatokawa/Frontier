@@ -13,9 +13,10 @@ namespace InGame.Item
             return _pickUpPosition.position;
         }
 
-        public void CollectDelete()
+        public ItemData CollectDelete()
         {
             Destroy(this.gameObject);
+            return new(_itemData);
         }
     }
 }

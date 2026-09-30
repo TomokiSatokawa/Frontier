@@ -17,9 +17,23 @@ namespace InGame.Item
             }
 
             _definition = definition;
+            _count = 1;
         }
         [SerializeField] private ItemDefinition _definition;
+        private int _count;
+
         public ItemDefinition Definition => _definition;
+        public int Count => _count;
+
+        public void AddCount()
+        {
+            _count++;
+        }
+
+        public void AddCount(int amount)
+        {
+            _count += amount;
+        }
 
         public override bool Equals(object obj)
         {
@@ -53,7 +67,7 @@ namespace InGame.Item
 
         public override string ToString()
         {
-            return $"ItemData: {Definition.Name} \n Definition : {Definition.ToString()}";
+            return $"ItemData: {Definition.Name} \n Definition : {Definition.ToString()} \n Count: {Count}";
         }
     }
 }

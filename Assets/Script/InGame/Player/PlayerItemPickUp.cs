@@ -13,6 +13,7 @@ namespace InGame.Player
         [SerializeField] private float _sightAngle;
         [SerializeField] private float _pickUpRange;
         [SerializeField] private LayerMask _itemLyreMask;
+        [SerializeField] private PlayerInventoryManager _playerInventoryManager;
 
         /// <summary> Hit対象オブジェクト </summary>
         private readonly Collider[] _hitCollider = new Collider[32];
@@ -52,7 +53,8 @@ namespace InGame.Player
         {
             if (_hitCollectable == null) return;
 
-            _hitCollectable.CollectDelete();
+            var itemData = _hitCollectable.CollectDelete();
+            _playerInventoryManager.AddItem(itemData);
         }
 
         private bool IsVisible(Transform target)
