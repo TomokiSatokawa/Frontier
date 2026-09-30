@@ -20,7 +20,7 @@ namespace InGame.Player
         private readonly Collider[] _hitCollider = new Collider[32];
         /// <summary> PickUpëŒè€ </summary>
         private ICollectable _hitCollectable;
-
+        public ICollectable HitCollectable => _hitCollectable;
         void Start()
         {
             InputManager.Interact.Where(x => x).Subscribe(_ => OnPickUp());
@@ -44,9 +44,7 @@ namespace InGame.Player
                     minDistance = sqr;
                     index = target;
                 }
-                Debug.Log("Hit " + target);
             }
-            Debug.Log("target " + index);
 
             _hitCollectable = null;
 
