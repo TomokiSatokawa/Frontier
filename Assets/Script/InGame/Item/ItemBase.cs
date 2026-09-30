@@ -10,8 +10,11 @@ namespace InGame.Item
 
         public Vector3 GetPickUpPosition()
         {
-            if(_pickUpPosition == null)
-                return this.transform.position;
+            if (this == null)
+                return Vector3.zero;
+
+            if (_pickUpPosition == null)
+                return transform.position;
 
             return _pickUpPosition.position;
         }
