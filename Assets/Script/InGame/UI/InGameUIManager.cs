@@ -27,12 +27,13 @@ namespace InGame.UI
             {
                 _inventoryPanel.OnActive();
                 _inventoryItemGenerator.OnDefault();
+                PlayerManager.Instance.SetPlayerStatus(PlayerManager.PlayerStatus.UIOperation);
 
             }
             else
             {
                 _inventoryPanel.OnHidden();
-
+                PlayerManager.Instance.SetPlayerStatus(PlayerManager.PlayerStatus.Normal);
             }
         }
     }

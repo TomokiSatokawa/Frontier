@@ -21099,37 +21099,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1920158762507531025, guid: 35348ac853f10584a9e52b978af197f9, type: 3}
   m_PrefabInstance: {fileID: 1075518748}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &913802616 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5057996890998569680, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
+--- !u!114 &913802626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3753993392496198962, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
   m_PrefabInstance: {fileID: 1290185027}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &913802626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913802616}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb9d3d6c3b6347245babb417e2450059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InGame.Player.PlayerItemPickUp
-  _mainCamera: {fileID: 1007598072}
-  _sightAngle: 60
-  _pickUpRange: 5
-  _itemLyreMask:
-    serializedVersion: 2
-    m_Bits: 8
-  _playerInventoryManager: {fileID: 913802627}
---- !u!114 &913802627
+--- !u!114 &913802627 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2834478981720788570, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
+  m_PrefabInstance: {fileID: 1290185027}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913802616}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dc2a4f13fcefc145b6d514ad3724d93, type: 3}
@@ -25530,6 +25516,7 @@ Transform:
   - {fileID: 1565716936}
   - {fileID: 1046863822}
   - {fileID: 1081807088}
+  - {fileID: 2132777040}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1187692474
@@ -43181,6 +43168,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3753993392496198962, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 1007598072}
     - target: {fileID: 5057996890998569680, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
       propertyPath: m_Name
       value: Player
@@ -43192,13 +43183,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5057996890998569680, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 913802626}
-    - targetCorrespondingSourceObject: {fileID: 5057996890998569680, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 913802627}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dafe87c0ad42eb74b8c397fd07211cf0, type: 3}
 --- !u!1 &1290852136
 GameObject:
@@ -60971,12 +60956,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132777036}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 20.9, z: 0}
   m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1179787304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2133074594
 PrefabInstance:
@@ -61225,7 +61210,6 @@ SceneRoots:
   - {fileID: 1179787304}
   - {fileID: 1290185027}
   - {fileID: 914046484}
-  - {fileID: 2132777040}
   - {fileID: 3345074736877608931}
   - {fileID: 20626628}
   - {fileID: 2080752298}
