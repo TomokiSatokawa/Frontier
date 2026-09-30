@@ -10,6 +10,7 @@ namespace InGame.Player
     /// </summary>
     public class PlayerItemPickUp : MonoBehaviour
     {
+        [SerializeField] private Camera _mainCamera;
         [SerializeField] private float _sightAngle;
         [SerializeField] private float _pickUpRange;
         [SerializeField] private LayerMask _itemLyreMask;
@@ -35,7 +36,7 @@ namespace InGame.Player
             for (int i = 0; i < count; i++)
             {
                 var target = _hitCollider[i].transform.root.gameObject;
-                var sqr = (this.transform.position - target.transform.position).sqrMagnitude;
+                var sqr = (target.transform.position - this.transform.position).sqrMagnitude;
 
                 //距離判定、視界判定
                 if (sqr < minDistance && IsVisible(target.transform))
@@ -43,7 +44,11 @@ namespace InGame.Player
                     minDistance = sqr;
                     index = target;
                 }
+                Debug.Log("Hit " + target);
             }
+            Debug.Log("target " + index);
+
+            _hitCollectable = null;
 
             //ICollectableを取得
             index?.TryGetComponent(out _hitCollectable);
@@ -60,17 +65,53 @@ namespace InGame.Player
         private bool IsVisible(Transform target)
         {
             // ターゲットまでの向きと距離計算
-            var targetDirection = target.position - this.transform.position;
+            var targetDirection = target.position - _mainCamera.transform.position;
             var targetDistance = targetDirection.magnitude;
 
             // cos(θ/2)を計算
             var cosHalf = Mathf.Cos(_sightAngle / 2 * Mathf.Deg2Rad);
 
             //内積取得
-            var innerProduct = Vector3.Dot(this.transform.forward, targetDirection.normalized);
+            var innerProduct = Vector3.Dot(_mainCamera.transform.forward, targetDirection.normalized);
 
             //判定
             return innerProduct > cosHalf;
+        }
+        private void OnDrawGizmosSelected()
+        {
+            // PickUp範囲
+            Gizmos.DrawWireSphere(
+                transform.position,
+                _pickUpRange);
+
+            if (_mainCamera == null)
+                return;
+
+            // カメラを基準に視界を表示
+            var cameraTransform = _mainCamera.transform;
+            var halfAngle = _sightAngle * 0.5f;
+
+            var leftDirection = Quaternion.AngleAxis(
+                -halfAngle,
+                cameraTransform.up) * cameraTransform.forward;
+
+            var rightDirection = Quaternion.AngleAxis(
+                halfAngle,
+                cameraTransform.up) * cameraTransform.forward;
+
+            // 視界の左右端
+            Gizmos.DrawRay(
+                cameraTransform.position,
+                leftDirection * _pickUpRange);
+
+            Gizmos.DrawRay(
+                cameraTransform.position,
+                rightDirection * _pickUpRange);
+
+            // 視界の中央
+            Gizmos.DrawRay(
+                cameraTransform.position,
+                cameraTransform.forward * _pickUpRange);
         }
     }
 }

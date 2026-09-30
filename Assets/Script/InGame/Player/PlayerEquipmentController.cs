@@ -35,11 +35,6 @@ namespace InGame.Player
             }
         }
 
-        public void Start()
-        {
-        
-        }
-
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
