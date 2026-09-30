@@ -24,6 +24,11 @@ namespace InGame.UI.Inventory
             _headerController.Layer.Subscribe(ShowItem);  
         }
 
+        public void OnDefault()
+        {
+            _headerController.OnSelect(InventoryItemLayer.Item);
+        }
+
         private void ShowItem(InventoryItemLayer layer)
         {
             var items = _inventoryManager.GetItem(layer);
