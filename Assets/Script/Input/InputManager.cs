@@ -101,35 +101,6 @@ namespace PlayerInput
                 _gameInput.UI.Disable();
         }
 
-        public static void SetMoveEnabled(bool enabled)
-        {
-            if (enabled)
-            {
-                _gameInput.Player.Move.Enable();
-            }
-            else
-            {
-                _gameInput.Player.Move.Disable();
-            }
-        }
-
-        public static void SetButtonEnabled(bool enabled)
-        {
-            if (enabled)
-            {
-                _gameInput.Player.Attack.Enable();
-                _gameInput.Player.Interact.Enable();
-                _gameInput.Player.Inventory.Enable();
-            }
-            else
-            {
-
-                _gameInput.Player.Attack.Disable();
-                _gameInput.Player.Interact.Disable();
-                _gameInput.Player.Inventory.Disable();
-            }
-        }
-
         public static void SetLookEnabled(bool enabled)
         {
             if (enabled)

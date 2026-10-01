@@ -22,22 +22,15 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
             case PlayerStatus.Normal:
                 InputManager.SetPlayerEnabled(true);
                 InputManager.SetUIEnabled(false);
-                InputManager.SetMoveEnabled(true);
-                InputManager.SetButtonEnabled(true);
-                InputManager.SetLookEnabled(true);
                 break;
             case PlayerStatus.MovementLocked:
-                InputManager.SetPlayerEnabled(true);
+                InputManager.SetPlayerEnabled(false);
                 InputManager.SetUIEnabled(false);
-                InputManager.SetMoveEnabled(false);
-                InputManager.SetButtonEnabled(false);
                 InputManager.SetLookEnabled(true);
                 break;
             case PlayerStatus.Locked:
                 InputManager.SetPlayerEnabled(true);
                 InputManager.SetUIEnabled(false);
-                InputManager.SetMoveEnabled(false);
-                InputManager.SetButtonEnabled(false);
                 InputManager.SetLookEnabled(false);
                 break;
             case PlayerStatus.UIOperation:
