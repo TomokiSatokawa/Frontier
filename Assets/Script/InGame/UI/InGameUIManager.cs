@@ -13,6 +13,8 @@ namespace InGame.UI
     {
         [SerializeField] private PanelControl _inventoryPanel;
         [SerializeField] private InventoryItemGenerator _inventoryItemGenerator;
+        [SerializeField] private ItemActionWindowControl _actionWindowControl;
+        [SerializeField] private CharacterPreview _characterPreview;
 
         private void Start()
         {
@@ -35,6 +37,9 @@ namespace InGame.UI
                 _inventoryPanel.OnHidden();
                 PlayerManager.Instance.SetPlayerStatus(PlayerManager.PlayerStatus.Normal);
             }
+
+            _actionWindowControl.OnHidden();
+            _characterPreview.SetVisible(isVisible);
         }
     }
 }

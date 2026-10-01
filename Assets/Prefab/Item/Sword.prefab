@@ -166,3 +166,17 @@ MonoBehaviour:
     _maxStack: 1
     _image: {fileID: 0}
     _layer: 1
+    _modules:
+    - rid: 3847071373676249186
+  references:
+    version: 2
+    RefIds:
+    - rid: 3847071373676249186
+      type: {class: EquipmentData, ns: InGame.Item, asm: Assembly-CSharp}
+      data:
+        _prefab: {fileID: 8449004803641222730, guid: 5cdf1ac831646004288735c99ac51e4a, type: 3}
+        _motionType: 1
+        _bone: 18
+        _offsetPosition: {x: 0.086, y: -0.029, z: 0.28}
+        _offsetRotation: {x: 90, y: 0, z: 0}
+        _scale: 0.5

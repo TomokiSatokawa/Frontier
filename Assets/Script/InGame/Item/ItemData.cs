@@ -35,6 +35,21 @@ namespace InGame.Item
             _count += amount;
         }
 
+        /// <summary>
+        /// ÉÇÉWÉÖÅ[ÉãéÊìæ
+        /// </summary>
+        public T RequireModule<T>() where T : ItemDataModuleBase
+        {
+            foreach (var module in _definition.Modules)
+            {
+                if (module.GetType() == typeof(T))
+                    return (T)module;
+            }
+
+            Debug.LogError($"[{nameof(ItemData)}] Module not found: {typeof(T).Name}");
+            return null;
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as ItemData);

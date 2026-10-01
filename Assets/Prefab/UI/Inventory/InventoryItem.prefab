@@ -383,5 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4bef3ecf9b7b6345915fb5a80ec1a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InGame.UI.Inventory.InventoryItemView
+  _rect: {fileID: 6441504606703349312}
+  _selectButton: {fileID: 7933656628412956986}
   _image: {fileID: 2583791972124081504}
   _text: {fileID: 4308958387179151499}

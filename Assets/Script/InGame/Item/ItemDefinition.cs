@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using InGame.UI.Inventory;
 using UnityEngine;
 
@@ -15,12 +16,14 @@ namespace InGame.Item
         [SerializeField] private int _maxStack;
         [SerializeField] private Sprite _image;
         [SerializeField] private InventoryItemLayer _layer;
+        [SerializeReference, SubclassSelector] private List<ItemDataModuleBase> _modules = new();
 
         public int ID => _id;
         public string Name => _name;
         public int MaxStack => _maxStack;
-        public Sprite Image => _image;//TODO:CSV‚É‚·‚éê‡AIDŒŸ“¢
+        public Sprite Image => _image; //TODO:CSV‚É‚·‚éê‡AIDŒŸ“¢
         public InventoryItemLayer Layer => _layer;
+        public IReadOnlyList<ItemDataModuleBase> Modules => _modules;
 
         public override string ToString()
         {

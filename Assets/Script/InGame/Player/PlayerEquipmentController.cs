@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using InGame.Item;
 using UnityEngine;
 
 namespace InGame.Player
@@ -10,46 +12,24 @@ namespace InGame.Player
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private EquipmentData _equipmentDatas;
+        [SerializeField] private LayerMask _layerMask;
 
-        private EquipmentData _currentData;
+        private Dictionary<HumanBodyBones, GameObject> _instancedObject = new();
 
-        [System.Serializable]
-        public class EquipmentData
+        public void SetEquipment(EquipmentData equipmentData)
         {
-            [SerializeField] private GameObject _prefab;
-            [SerializeField] private MotionType _motionType;
-            [SerializeField] private HumanBodyBones _bones;
-            [SerializeField] private Vector3 _offsetPosition;
-            [SerializeField] private Vector3 _offsetRotation;
-            [SerializeField] private float _scale;
-            public MotionType MotionType => _motionType;
+            var targetBone = _animator.GetBoneTransform(equipmentData.Bone);
+            var _instancedObject = Instantiate(equipmentData.Prefab, targetBone);
 
-            private GameObject _instancedObject;
-            public void SetEquipment(Animator animator)
-            {
-                var targetBone = animator.GetBoneTransform(_bones);
-                _instancedObject = Instantiate(_prefab, targetBone);
-                _instancedObject.transform.localPosition = _offsetPosition;
-                _instancedObject.transform.localRotation = Quaternion.Euler(_offsetRotation);
-                _instancedObject.transform.localScale = Vector3.one * _scale;
-            }
-        }
+            //Transformを設定
+            _instancedObject.transform.localPosition = equipmentData.OffsetPosition;
+            _instancedObject.transform.localRotation = Quaternion.Euler(equipmentData.OffsetRotation);
+            _instancedObject.transform.localScale = Vector3.one * equipmentData.Scale;
 
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                SetEquipment(_equipmentDatas);
-            }
-        }
+            //レイヤーを設定
+            _instancedObject.layer = Mathf.RoundToInt(Mathf.Log(_layerMask.value, 2));
 
-        private void SetEquipment(EquipmentData equipmentData)
-        {
-            if (_currentData != null && equipmentData == _currentData)
-                return;
-
-            _currentData = equipmentData;
-            equipmentData.SetEquipment(_animator);
+            //プレイヤーのモーションを変化
             PlayerManager.Instance.SetMotionType(equipmentData.MotionType);
         }
     }

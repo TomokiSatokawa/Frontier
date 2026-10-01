@@ -3,7 +3,6 @@ using InGame.Item;
 using InGame.Player;
 using R3;
 using UnityEngine;
-using UnityEngine.Splines;
 
 namespace InGame.UI.Inventory
 {
@@ -14,6 +13,7 @@ namespace InGame.UI.Inventory
     {
         [SerializeField] private PlayerInventoryManager _inventoryManager;
         [SerializeField] private InventoryHeaderController _headerController;
+        [SerializeField] private ItemActionWindowControl _actionWindowControl;
         [SerializeField] private RectTransform _content;
         [SerializeField] private InventoryItemView _prefab;
 
@@ -21,7 +21,7 @@ namespace InGame.UI.Inventory
 
         private void Start()
         {
-            _headerController.Layer.Subscribe(ShowItem);  
+            _headerController.Layer.Subscribe(ShowItem);
         }
 
         public void OnDefault()
@@ -41,14 +41,14 @@ namespace InGame.UI.Inventory
             {
                 ItemData item = data[i];
 
-                if(i < _clonedItemUI.Count)
+                if (i < _clonedItemUI.Count)
                 {
-                    _clonedItemUI[i].SetData(item);
+                    _clonedItemUI[i].SetData(item, SelectItem);
                     continue;
                 }
 
                 var itemUI = Instantiate(_prefab, _content);
-                itemUI.SetData(item);
+                itemUI.SetData(item, SelectItem);
                 _clonedItemUI.Add(itemUI);
             }
 
@@ -57,6 +57,11 @@ namespace InGame.UI.Inventory
                 Destroy(_clonedItemUI[i].gameObject);
                 _clonedItemUI.RemoveAt(i);
             }
+        }
+
+        private void SelectItem(InventoryItemView item)
+        {
+            _actionWindowControl.OnSelectItem(item);
         }
     }
 }
