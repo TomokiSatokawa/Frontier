@@ -18,16 +18,27 @@ namespace InGame.Player
 
         public void SetEquipment(EquipmentData equipmentData)
         {
+            //同じボーンに生成済みの場合
+            if(_instancedObject.TryGetValue(equipmentData.Bone,out var clonedObject) || clonedObject != null)
+            {
+                //装備外す処理
+                Debug.Log("装備済み");
+                return;
+            }
+
             var targetBone = _animator.GetBoneTransform(equipmentData.Bone);
-            var _instancedObject = Instantiate(equipmentData.Prefab, targetBone);
+            var instanced = Instantiate(equipmentData.Prefab, targetBone);
 
             //Transformを設定
-            _instancedObject.transform.localPosition = equipmentData.OffsetPosition;
-            _instancedObject.transform.localRotation = Quaternion.Euler(equipmentData.OffsetRotation);
-            _instancedObject.transform.localScale = Vector3.one * equipmentData.Scale;
+            instanced.transform.localPosition = equipmentData.OffsetPosition;
+            instanced.transform.localRotation = Quaternion.Euler(equipmentData.OffsetRotation);
+            instanced.transform.localScale = Vector3.one * equipmentData.Scale;
 
             //レイヤーを設定
-            _instancedObject.layer = Mathf.RoundToInt(Mathf.Log(_layerMask.value, 2));
+            instanced.layer = Mathf.RoundToInt(Mathf.Log(_layerMask.value, 2));
+
+            //生成済み武器に追加
+            _instancedObject[equipmentData.Bone] = instanced;
 
             //プレイヤーのモーションを変化
             PlayerManager.Instance.SetMotionType(equipmentData.MotionType);
