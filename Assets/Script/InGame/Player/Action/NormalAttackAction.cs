@@ -1,5 +1,5 @@
 using Common;
-using InGame.Player.Action;
+using InGame.Player.Actions;
 using InGame.Player.Motion;
 using UnityEngine;
 

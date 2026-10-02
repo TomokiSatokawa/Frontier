@@ -51,10 +51,9 @@ namespace InGame.Player
             _animationPlayer.PlayOneShot(equipmentData.EquipmentEmote);
         }
 
-        //TODO:エラー記述、Fix
         public EquipmentData TryUnequipEquipment(EquipmentData overrideData)
         {
-            //生成済み装備が存在しない
+            // 生成済み装備が存在しない
             if (!_instancedObject.TryGetValue(overrideData.Bone, out var clonedObject) || clonedObject == null)
             {
                 return null;
@@ -62,7 +61,7 @@ namespace InGame.Player
 
             if (!_instancedEquipmentData.TryGetValue(clonedObject, out var equipmentData))
             {
-                Debug.LogError("");
+                Debug.LogError($"[{nameof(PlayerEquipmentController)}] 生成済みオブジェクト '{clonedObject.name}' に対応する EquipmentData が存在しません。");
                 return null;
             }
 
@@ -71,16 +70,30 @@ namespace InGame.Player
 
         public void UnequipEquipment(EquipmentData equipmentData)
         {
-            //生成済み装備が存在しない
+            // 生成済み装備が存在しない
             if (!_instancedObject.TryGetValue(equipmentData.Bone, out var clonedObject) || clonedObject == null)
             {
-                Debug.LogError("");　
+                Debug.LogError($"[{nameof(PlayerEquipmentController)}] Bone '{equipmentData.Bone}' に装備されているオブジェクトが存在しません。");
                 return;
             }
 
             _instancedObject.Remove(equipmentData.Bone);
-            _instancedEquipmentData.Remove(clonedObject);
+
+            if (!_instancedEquipmentData.Remove(clonedObject))
+            {
+                Debug.LogError($"[{nameof(PlayerEquipmentController)}] 生成済みオブジェクトに対応する EquipmentData が見つかりません。");
+            }
+
             Destroy(clonedObject);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Debug.Log("Stop");
+                _animationPlayer.StopPlayOneShot();
+            }
         }
     }
 }

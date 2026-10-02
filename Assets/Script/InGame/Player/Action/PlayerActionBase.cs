@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InGame.Player.Action
+namespace InGame.Player.Actions
 {
     /// <summary>
     /// プレイヤーアクションの基底クラス

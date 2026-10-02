@@ -3,7 +3,7 @@ using PlayerInput;
 using R3;
 using UnityEngine;
 
-namespace InGame.Player.Action
+namespace InGame.Player.Actions
 {
     /// <summary>
     /// プレイヤーのアクションを実行

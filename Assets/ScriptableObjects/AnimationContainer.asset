@@ -229,7 +229,7 @@ MonoBehaviour:
     _clip: {fileID: -203655887218126122, guid: cb810571d6c0ddb4bb110ddc7d170be7, type: 3}
     _avatarMaskData: 1
     _blendData:
-      Duration: 0.3
+      Duration: 0.5
       Curve:
         serializedVersion: 2
         m_Curve:

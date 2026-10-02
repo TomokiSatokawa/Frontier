@@ -17,6 +17,7 @@ namespace InGame.Player.Motion
         [SerializeField] private BaseAnimation _baseAnimation;
 
         private CancellationTokenSource _topLayerToken;
+        private AnimationPlaybackState _currentPlayOneShot;
         private enum AnimationLayer
         {
             Base, TopLayer
@@ -100,14 +101,20 @@ namespace InGame.Player.Motion
             _topLayerToken?.Dispose();
             _topLayerToken = new CancellationTokenSource();
             var playbackState = new AnimationPlaybackState();
-            PlayOneShotAsync(groupBase ,playbackState).Forget();
+            PlayOneShotAsync(groupBase, playbackState).Forget();
             return playbackState;
         }
 
-        private async UniTask PlayOneShotAsync(EnumGroupBase groupBase,AnimationPlaybackState playbackState)
+        public void StopPlayOneShot()
+        {
+            _currentPlayOneShot?.OnStop();
+        }
+
+        private async UniTask PlayOneShotAsync(EnumGroupBase groupBase, AnimationPlaybackState playbackState)
         {
             var animationData = _container.GetAnimation(groupBase);
             var playable = AnimationClipPlayable.Create(_graph, animationData.Clip);
+            _currentPlayOneShot = playbackState;
 
             //単発クリップを専用レイヤーにセット
             TryDisconnect(_layerMixer, (int)AnimationLayer.TopLayer);
@@ -121,6 +128,12 @@ namespace InGame.Player.Motion
             float elapsedTime = 0f;
             float clipLength = animationData.Clip.length;
             float blendDuration = animationData.Blend.Duration;
+
+            _currentPlayOneShot.StopAnimation += () =>
+            {
+                elapsedTime = clipLength - blendDuration;
+            };
+
             try
             {
                 //Animation中待機処理
@@ -150,7 +163,7 @@ namespace InGame.Player.Motion
 
                     await UniTask.Yield(cancellationToken: _topLayerToken.Token);
                     elapsedTime += Time.deltaTime;
-                    playbackState.Duration = elapsedTime;
+                    playbackState.Time = elapsedTime;
                 }
             }
             catch (OperationCanceledException)
