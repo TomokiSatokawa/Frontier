@@ -86,14 +86,5 @@ namespace InGame.Player
 
             Destroy(clonedObject);
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                Debug.Log("Stop");
-                _animationPlayer.StopPlayOneShot();
-            }
-        }
     }
 }

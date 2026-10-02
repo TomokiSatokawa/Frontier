@@ -1,4 +1,5 @@
 using Common.UI;
+using InGame.Player.Motion;
 using InGame.UI.Inventory;
 using PlayerInput;
 using R3;
@@ -12,6 +13,7 @@ namespace InGame.UI
     public class InGameUIManager : MonoBehaviour
     {
         [SerializeField] private PanelControl _inventoryPanel;
+        [SerializeField] private PlayerAnimationPlayer _playerAnimationPlayer;
         [SerializeField] private InventoryItemGenerator _inventoryItemGenerator;
         [SerializeField] private ItemActionWindowControl _actionWindowControl;
         [SerializeField] private CharacterPreview _characterPreview;
@@ -35,6 +37,9 @@ namespace InGame.UI
             else
             {
                 _inventoryPanel.OnHidden();
+
+                //Inventory内で実行したアニメーションを停止
+                _playerAnimationPlayer.StopPlayOneShot();
                 PlayerManager.Instance.SetPlayerStatus(PlayerManager.PlayerStatus.Normal);
             }
 
