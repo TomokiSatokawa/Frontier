@@ -1,3 +1,5 @@
+using Common;
+using InGame.Player.Motion;
 using UnityEngine;
 
 namespace InGame.Item
@@ -11,6 +13,7 @@ namespace InGame.Item
         [SerializeField] private Vector3 _offsetPosition;
         [SerializeField] private Vector3 _offsetRotation;
         [SerializeField] private float _scale;
+        [SerializeReference] private EnumGroupBase _equipmentEmote;
 
         public GameObject Prefab => _prefab;
         public MotionType MotionType => _motionType;
@@ -18,5 +21,6 @@ namespace InGame.Item
         public Vector3 OffsetPosition => _offsetPosition;
         public Vector3 OffsetRotation => _offsetRotation;
         public float Scale => _scale;
+        public EnumGroupBase EquipmentEmote => _equipmentEmote;
     }
 }

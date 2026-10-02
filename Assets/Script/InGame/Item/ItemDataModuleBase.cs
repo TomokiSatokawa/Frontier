@@ -8,6 +8,11 @@ namespace InGame.Item
     [System.Serializable]
     public abstract class ItemDataModuleBase
     {
-
+        public ItemData Owner {  get; set; }
+        
+        public void SetOwner(ItemData owner)
+        {
+            Owner = owner;
+        }
     }
 }

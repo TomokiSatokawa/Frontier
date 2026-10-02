@@ -52,4 +52,14 @@ namespace Common
             return Create();
         }
     }
+
+    [Serializable]
+    public class EmoteMotion : EnumGroupBase<EmoteAnimationType>
+    {
+        public override EnumID Create(EmoteAnimationType type)
+        {
+            _type = type;
+            return Create();
+        }
+    }
 }

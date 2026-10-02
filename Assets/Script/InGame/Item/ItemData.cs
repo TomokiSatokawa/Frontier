@@ -18,6 +18,11 @@ namespace InGame.Item
 
             _definition = definition;
             _count = 1;
+
+            foreach(var module in _definition.Modules)
+            {
+                module.SetOwner(this);
+            }
         }
         [SerializeField] private ItemDefinition _definition;
         private int _count;

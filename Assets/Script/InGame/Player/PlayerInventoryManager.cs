@@ -56,8 +56,20 @@ namespace InGame.Player
                 Debug.LogError($"[{nameof(PlayerEquipmentController)}] Cannot equip item because the item layer is not Equipment. Item: {item.Definition.Name}");
                 return;
             }
+            var equipmentData = item.RequireModule<EquipmentData>();
 
-            _equipmentController.SetEquipment(item.RequireModule<EquipmentData>());
+            var data = _equipmentController.TryUnequipEquipment(equipmentData);
+
+            if(data != null)
+                UnequipEquipmentItem(data.Owner);
+
+            _equipmentController.SetEquipment(equipmentData);
+        }
+
+        public void UnequipEquipmentItem(ItemData item)
+        {
+            var equipmentData = item.RequireModule<EquipmentData>();
+            _equipmentController.UnequipEquipment(equipmentData);
         }
 
         public List<ItemData> GetItem(InventoryItemLayer layer)
