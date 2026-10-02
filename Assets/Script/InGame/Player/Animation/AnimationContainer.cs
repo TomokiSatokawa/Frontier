@@ -9,6 +9,7 @@ namespace InGame.Player.Motion
     [CreateAssetMenu(fileName = "AnimationContainer", menuName = "Scriptable Objects/AnimationContainer")]
     public class AnimationContainer : ScriptableObject
     {
+        [SerializeField] private AvatarMaskData[] _avatarMaskData;
         [SerializeField] private AnimationData<BasicAnimationType>[] _basicClip;
         [SerializeField] private AnimationData<SwordAnimationType>[] _swordClip;
         [SerializeField] private AnimationData<EmoteAnimationType>[] _emoteClip;
@@ -39,6 +40,17 @@ namespace InGame.Player.Motion
             return null;
         }
 
+        public AvatarMask GetMask(AvatarMaskType type)
+        {
+            foreach(var data in _avatarMaskData)
+            {
+                if (data.MaskType == type)
+                    return data.Mask;
+            }
+            Debug.LogError(type.ToString() + " is not found");
+            return null;
+        }
+
         private void AddDictionary<T>(EnumGroupBase<T> group, AnimationData<T>[] clips) where T : Enum
         {
             foreach (var clipData in clips)
@@ -51,6 +63,7 @@ namespace InGame.Player.Motion
         public interface IReadOnlyAnimationData
         {
             public AnimationClip Clip { get; }
+            public AvatarMaskType AvatarMaskType {  get; }
             public BlendData Blend { get; }
         }
 
@@ -59,13 +72,25 @@ namespace InGame.Player.Motion
         {
             [SerializeField] private T _name;
             [SerializeField] private AnimationClip _clip;
+            [SerializeField] private AvatarMaskType _avatarMaskData;
             [SerializeField] private BlendData _blendData;
 
             public T Name => _name;
             public AnimationClip Clip => _clip;
+            public AvatarMaskType AvatarMaskType => _avatarMaskData;
             public BlendData Blend => _blendData;
 
 
+        }
+
+        [System.Serializable]
+        public class AvatarMaskData
+        {
+            [SerializeField] private AvatarMaskType _maskType;
+            [SerializeField] private AvatarMask _mask;
+
+            public AvatarMaskType MaskType => _maskType;
+            public AvatarMask Mask => _mask;
         }
     }
 
@@ -74,6 +99,11 @@ namespace InGame.Player.Motion
     {
         public float Duration;
         public AnimationCurve Curve;
+    }
+
+    public enum AvatarMaskType
+    {
+        Full,Upper,Lower
     }
 
     public enum BasicAnimationType : byte

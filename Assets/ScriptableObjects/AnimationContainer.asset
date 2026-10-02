@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4876ca9e0ee30c344af2d90a92c2ddd4, type: 3}
   m_Name: AnimationContainer
   m_EditorClassIdentifier: Assembly-CSharp::InGame.Player.Motion.AnimationContainer
+  _avatarMaskData:
+  - _maskType: 0
+    _mask: {fileID: 31900000, guid: 89527f5525238ee44b3182458d85143a, type: 2}
+  - _maskType: 1
+    _mask: {fileID: 31900000, guid: 142a22760aae7114f82e9cfc781709d0, type: 2}
+  - _maskType: 2
+    _mask: {fileID: 31900000, guid: 142a22760aae7114f82e9cfc781709d0, type: 2}
   _basicClip:
   - _name: 0
     _clip: {fileID: 7400000, guid: b26ee3b9a9e99724ebebee68b77927c2, type: 2}
+    _avatarMaskData: 0
     _blendData:
       Duration: 0.3
       Curve:
@@ -43,6 +51,7 @@ MonoBehaviour:
         m_RotationOrder: 4
   - _name: 1
     _clip: {fileID: 7400000, guid: 07f56c364290e304799392478301f224, type: 2}
+    _avatarMaskData: 0
     _blendData:
       Duration: 0.3
       Curve:
@@ -71,6 +80,7 @@ MonoBehaviour:
         m_RotationOrder: 4
   - _name: 2
     _clip: {fileID: 7400000, guid: 2b6ccbe9034e8554bbbc105e480cd0f5, type: 2}
+    _avatarMaskData: 0
     _blendData:
       Duration: 0.3
       Curve:
@@ -100,6 +110,7 @@ MonoBehaviour:
   _swordClip:
   - _name: 0
     _clip: {fileID: -203655887218126122, guid: 28dce25fc31094c4a817a699ffc9c21f, type: 3}
+    _avatarMaskData: 0
     _blendData:
       Duration: 0.3
       Curve:
@@ -128,6 +139,7 @@ MonoBehaviour:
         m_RotationOrder: 4
   - _name: 1
     _clip: {fileID: -203655887218126122, guid: b570d0aa36e6b4846976f58694fbe344, type: 3}
+    _avatarMaskData: 0
     _blendData:
       Duration: 0.3
       Curve:
@@ -156,6 +168,7 @@ MonoBehaviour:
         m_RotationOrder: 4
   - _name: 2
     _clip: {fileID: -203655887218126122, guid: c5a43015849797c4bb76c8eb61d6a498, type: 3}
+    _avatarMaskData: 0
     _blendData:
       Duration: 0.3
       Curve:
@@ -184,6 +197,7 @@ MonoBehaviour:
         m_RotationOrder: 4
   - _name: 3
     _clip: {fileID: -203655887218126122, guid: 2477eaa9d03943e4794c4b33c6ccf421, type: 3}
+    _avatarMaskData: 0
     _blendData:
       Duration: 0.5
       Curve:
@@ -213,6 +227,7 @@ MonoBehaviour:
   _emoteClip:
   - _name: 0
     _clip: {fileID: -203655887218126122, guid: cb810571d6c0ddb4bb110ddc7d170be7, type: 3}
+    _avatarMaskData: 1
     _blendData:
       Duration: 0.3
       Curve:

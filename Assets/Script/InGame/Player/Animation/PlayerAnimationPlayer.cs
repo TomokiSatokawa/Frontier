@@ -114,6 +114,10 @@ namespace InGame.Player.Motion
             _layerMixer.ConnectInput((int)AnimationLayer.TopLayer, playable, 0);
             _layerMixer.SetInputWeight((int)AnimationLayer.TopLayer, 0f);
 
+            //MaskÇê›íË
+            var mask = _container.GetMask(animationData.AvatarMaskType);
+            _layerMixer.SetLayerMaskFromAvatarMask((int)AnimationLayer.TopLayer, mask);
+
             float elapsedTime = 0f;
             float clipLength = animationData.Clip.length;
             float blendDuration = animationData.Blend.Duration;
