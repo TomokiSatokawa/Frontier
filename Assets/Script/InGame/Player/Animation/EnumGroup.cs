@@ -62,4 +62,14 @@ namespace Common
             return Create();
         }
     }
+
+    [Serializable]
+    public class FootmanMotion : EnumGroupBase<FootmanAnimationType>
+    {
+        public override EnumID Create(FootmanAnimationType type)
+        {
+            _type = type;
+            return Create();
+        }
+    }
 }

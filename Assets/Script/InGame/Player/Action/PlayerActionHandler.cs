@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using InGame.Player.Motion;
 using PlayerInput;
 using R3;
@@ -12,7 +13,7 @@ namespace InGame.Player.Actions
     {
         [SerializeField] private PlayerAnimationPlayer _animationPlayer;
         [SerializeField] private PlayerMovement _playerMovement;
-        [SerializeReference, SubclassSelector] private PlayerActionBase[] _actions;
+        [SerializeReference, SubclassSelector] private List<PlayerActionBase> _actions;
 
         private PlayerActionBase _currentAction;
         private ActionContext _actionContext;
@@ -23,7 +24,7 @@ namespace InGame.Player.Actions
             InputManager.Attack.Where(x => x).Subscribe(_ => OnActionKeyClick(ActionKeyType.Attack));//.AddTo(this);
         }
 
-        public void Update()
+        private void Update()
         {
             if (_currentAction == null) return;
 
@@ -48,6 +49,24 @@ namespace InGame.Player.Actions
                     _currentAction.StartAction(_actionContext);
                     return;
                 }
+            }
+        }
+
+        public void AddAction(params PlayerActionBase[] actionBases)
+        {
+            foreach (var action in actionBases)
+            {
+                if (action == null) return;
+                _actions.Add(action);
+            }
+        }
+
+        public void RemoveAction(params PlayerActionBase[] actionBases)
+        {
+            foreach (var action in actionBases)
+            {
+                if (action == null) return;
+                _actions.Remove(action);
             }
         }
     }

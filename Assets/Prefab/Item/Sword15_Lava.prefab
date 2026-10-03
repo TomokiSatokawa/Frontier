@@ -182,7 +182,19 @@ MonoBehaviour:
         _scale: 0.5
         _equipmentEmote:
           rid: 3847071386976911490
+        _actions:
+        - rid: 3847071408440737886
     - rid: 3847071386976911490
       type: {class: EmoteMotion, ns: Common, asm: Assembly-CSharp}
       data:
         _type: 0
+    - rid: 3847071408440737886
+      type: {class: NormalAttackAction, ns: , asm: Assembly-CSharp}
+      data:
+        _actionKey: 0
+        _attackMotion:
+          rid: 3847071408440737887
+    - rid: 3847071408440737887
+      type: {class: SwordMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 4

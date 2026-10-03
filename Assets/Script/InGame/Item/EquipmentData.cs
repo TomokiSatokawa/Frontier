@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using Common;
+using InGame.Player.Actions;
 using InGame.Player.Motion;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
 
 namespace InGame.Item
 {
@@ -14,6 +17,7 @@ namespace InGame.Item
         [SerializeField] private Vector3 _offsetRotation;
         [SerializeField] private float _scale;
         [SerializeReference] private EnumGroupBase _equipmentEmote;
+        [SerializeReference, SubclassSelector] private PlayerActionBase[] _actions;
 
         public GameObject Prefab => _prefab;
         public MotionType MotionType => _motionType;
@@ -22,5 +26,6 @@ namespace InGame.Item
         public Vector3 OffsetRotation => _offsetRotation;
         public float Scale => _scale;
         public EnumGroupBase EquipmentEmote => _equipmentEmote;
+        public PlayerActionBase[] Actions => _actions;
     }
 }

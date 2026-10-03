@@ -13,6 +13,7 @@ namespace InGame.Player.Motion
         [SerializeField] private AnimationData<BasicAnimationType>[] _basicClip;
         [SerializeField] private AnimationData<SwordAnimationType>[] _swordClip;
         [SerializeField] private AnimationData<EmoteAnimationType>[] _emoteClip;
+        [SerializeField] private AnimationData<FootmanAnimationType>[] _footmanClip;
 
         private Dictionary<EnumID, IReadOnlyAnimationData> _animationDictionary = new();
         public IReadOnlyList<IReadOnlyAnimationData> AnimationList => _animationDictionary.Values.ToList();
@@ -22,6 +23,7 @@ namespace InGame.Player.Motion
             AddDictionary(new BasicMotion(), _basicClip);
             AddDictionary(new SwordMotion(), _swordClip);
             AddDictionary(new EmoteMotion(), _emoteClip);
+            AddDictionary(new FootmanMotion(), _footmanClip);
         }
 
         public IReadOnlyAnimationData GetAnimation(EnumGroupBase enumGroup)
@@ -42,7 +44,7 @@ namespace InGame.Player.Motion
 
         public AvatarMask GetMask(AvatarMaskType type)
         {
-            foreach(var data in _avatarMaskData)
+            foreach (var data in _avatarMaskData)
             {
                 if (data.MaskType == type)
                     return data.Mask;
@@ -63,7 +65,7 @@ namespace InGame.Player.Motion
         public interface IReadOnlyAnimationData
         {
             public AnimationClip Clip { get; }
-            public AvatarMaskType AvatarMaskType {  get; }
+            public AvatarMaskType AvatarMaskType { get; }
             public BlendData Blend { get; }
         }
 
@@ -103,7 +105,7 @@ namespace InGame.Player.Motion
 
     public enum AvatarMaskType
     {
-        Full,Upper,Lower
+        Full, Upper, Lower
     }
 
     public enum BasicAnimationType : byte
@@ -113,11 +115,16 @@ namespace InGame.Player.Motion
 
     public enum SwordAnimationType : byte
     {
-        Idol, Walk, Run, Attack
+        Idol, Walk, Run, Attack, Slash
     }
 
-    public enum EmoteAnimationType : byte 
+    public enum EmoteAnimationType : byte
     {
         SwordEquipment,
+    }
+
+    public enum FootmanAnimationType : byte
+    {
+        Idol, Run, Attack
     }
 }

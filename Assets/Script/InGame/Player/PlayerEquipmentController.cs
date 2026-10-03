@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using InGame.Item;
+using InGame.Player.Actions;
 using InGame.Player.Motion;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace InGame.Player
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private PlayerAnimationPlayer _animationPlayer;
+        [SerializeField] private PlayerActionHandler _actionHandler;
         [SerializeField] private EquipmentData _equipmentDatas;
         [SerializeField] private LayerMask _layerMask;
 
@@ -24,7 +26,6 @@ namespace InGame.Player
             //同じボーンに生成済みの場合
             if(_instancedObject.TryGetValue(equipmentData.Bone,out var clonedObject) || clonedObject != null)
             {
-                //装備外す処理
                 Debug.Log("装備済み");
                 return;
             }
@@ -49,6 +50,9 @@ namespace InGame.Player
 
             //装備モーションを再生
             _animationPlayer.PlayOneShot(equipmentData.EquipmentEmote);
+
+            //武器専用アクションを追加
+            _actionHandler.AddAction(equipmentData.Actions); 
         }
 
         public EquipmentData TryUnequipEquipment(EquipmentData overrideData)
@@ -83,6 +87,9 @@ namespace InGame.Player
             {
                 Debug.LogError($"[{nameof(PlayerEquipmentController)}] 生成済みオブジェクトに対応する EquipmentData が見つかりません。");
             }
+
+            //武器専用アクションを外す
+            _actionHandler.RemoveAction(equipmentData.Actions);
 
             Destroy(clonedObject);
         }
