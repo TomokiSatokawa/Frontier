@@ -1,5 +1,5 @@
-using Common.Motion;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace InGame.Enemy
 {
@@ -10,6 +10,7 @@ namespace InGame.Enemy
     {
         [SerializeReference, SubclassSelector] private EnemyStateBase[] _states;
         [SerializeField] private EnemyAnimationPlayer _animation;
+        [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private Transform _target;
 
         private EnemyStateBase _currentState;
@@ -17,9 +18,9 @@ namespace InGame.Enemy
 
         private void Start()
         {
-            _context = new(_animation, _target,this.transform);
+            _context = new(_animation, _agent, _target, this.transform);
 
-            foreach(var state in _states)
+            foreach (var state in _states)
             {
                 if (state.IsStart)
                 {
@@ -42,7 +43,7 @@ namespace InGame.Enemy
 
             if (!_currentState.IsExitCondition(_context)) return;
 
-            foreach(var state in _states)
+            foreach (var state in _states)
             {
                 if (state == _currentState) continue;
 

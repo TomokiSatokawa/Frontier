@@ -1,5 +1,6 @@
 using Common.Motion;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace InGame.Enemy
 {
@@ -24,22 +25,22 @@ namespace InGame.Enemy
         {
             foreach (var condition in _startConditions)
             {
-                if (!condition.IsSatisfied(context))
-                    return false;
+                if (condition.IsSatisfied(context))
+                    return true;
             }
 
-            return true;
+            return false;
         }
 
         public bool IsExitCondition(EnemyStateContext context)
         {
             foreach (var condition in _exitConditions)
             {
-                if (!condition.IsSatisfied(context))
-                    return false;
+                if (condition.IsSatisfied(context))
+                    return true;
             }
 
-            return true;
+            return false;
         }
 
         public void EnterState(EnemyStateContext context)
@@ -65,16 +66,19 @@ namespace InGame.Enemy
     public struct EnemyStateContext
     {
         private EnemyAnimationPlayer _animation;
+        private NavMeshAgent _agent;
         private Transform _target;
         private Transform _origin;
 
         public EnemyAnimationPlayer Animation => _animation;
+        public NavMeshAgent Agent => _agent;
         public Transform Target => _target;
         public Transform Origin => _origin;
 
-        public EnemyStateContext(EnemyAnimationPlayer animation, Transform target,Transform origin)
+        public EnemyStateContext(EnemyAnimationPlayer animation,NavMeshAgent agent , Transform target,Transform origin)
         {
             _animation = animation;
+            _agent = agent;
             _target = target;
             _origin = origin;
         }

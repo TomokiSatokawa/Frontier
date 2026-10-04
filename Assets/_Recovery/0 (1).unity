@@ -50253,7 +50253,6 @@ MonoBehaviour:
         - rid: 3847071408440738193
         _exitConditions:
         - rid: 3847071408440738194
-        - rid: 3847071434212638819
         _isStart: 0
     - rid: 3847071408440738193
       type: {class: PlayerDistanceCondition, ns: InGame.Enemy, asm: Assembly-CSharp}
@@ -50275,26 +50274,21 @@ MonoBehaviour:
         _isStart: 0
         _attackMotion:
           rid: 3847071432934162541
-        _attackInterval: 2
+        _attackInterval: 1
     - rid: 3847071432934162539
       type: {class: PlayerDistanceCondition, ns: InGame.Enemy, asm: Assembly-CSharp}
       data:
-        _distance: 2
-        _comparisonType: 0
+        _distance: 1.5
+        _comparisonType: 2
     - rid: 3847071432934162540
       type: {class: PlayerDistanceCondition, ns: InGame.Enemy, asm: Assembly-CSharp}
       data:
-        _distance: 2
-        _comparisonType: 2
+        _distance: 1.5
+        _comparisonType: 0
     - rid: 3847071432934162541
       type: {class: FootmanMotion, ns: Common, asm: Assembly-CSharp}
       data:
         _type: 2
-    - rid: 3847071434212638819
-      type: {class: PlayerDistanceCondition, ns: InGame.Enemy, asm: Assembly-CSharp}
-      data:
-        _distance: 2
-        _comparisonType: 0
 --- !u!195 &1696368999
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -50305,7 +50299,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

@@ -1,19 +1,37 @@
+using Common;
 using UnityEngine;
 
 namespace InGame.Enemy
 {
-    public class EnemyAttackState : MonoBehaviour
+    [System.Serializable]
+    public class EnemyAttackState : EnemyStateBase
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
+        [SerializeReference] private EnumGroupBase _attackMotion;
+        [SerializeField] private float _attackInterval;
 
+        private float _nextAttackTime;
+        protected override void OnEnter(EnemyStateContext context)
+        {
+            context.Animation.SetMoveAmount(0f);
+
+            Debug.Log("AttackState");
+            _nextAttackTime = Time.time;
         }
 
-        // Update is called once per frame
-        void Update()
+        protected override void OnExit(EnemyStateContext context)
         {
+            Debug.Log("AttackExit");
+            _nextAttackTime = float.MinValue;
+        }
 
+        protected override void OnUpdate(EnemyStateContext context)
+        {
+            if (_nextAttackTime <= Time.time)
+            {
+                Debug.Log("Attack");
+                context.Animation.PlayOneShot(_attackMotion);
+                _nextAttackTime += _attackInterval;
+            }
         }
     }
 }

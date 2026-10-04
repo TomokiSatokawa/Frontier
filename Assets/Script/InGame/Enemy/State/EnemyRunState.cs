@@ -7,18 +7,17 @@ namespace InGame.Enemy
     {
         protected override void OnEnter(EnemyStateContext context)
         {
-            Debug.Log("Run");
             context.Animation.SetMoveAmount(2);
         }
 
         protected override void OnExit(EnemyStateContext context)
         {
-
+            context.Agent.ResetPath();
         }
 
         protected override void OnUpdate(EnemyStateContext context)
         {
-
+            context.Agent.SetDestination(context.Target.position);
         }
     }
 }
