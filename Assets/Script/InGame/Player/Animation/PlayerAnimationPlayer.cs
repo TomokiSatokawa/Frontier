@@ -8,8 +8,9 @@ namespace InGame.Player.Motion
     {
         [SerializeField] private PlayerMovement _playerMovement;
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             PlayerManager.Instance.Type.Subscribe(UpdateBaseClip);
         }
 

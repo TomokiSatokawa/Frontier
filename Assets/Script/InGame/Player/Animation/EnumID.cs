@@ -6,11 +6,13 @@ namespace InGame.Player.Motion
     [Serializable]
     public readonly struct EnumID : IEquatable<EnumID>
     {
+        private readonly Type _groupType;
         private readonly Type _enumType;
         private readonly int _type;
 
-        private EnumID(Type enumType, int type)
+        private EnumID(Type groupType, Type enumType, int type)
         {
+            _groupType = groupType;
             _enumType = enumType;
             _type = type;
         }
@@ -19,6 +21,7 @@ namespace InGame.Player.Motion
             where T : Enum
         {
             return new EnumID(
+                group.GetType(),
                 typeof(T),
                 Convert.ToInt32(type)
             );
@@ -52,7 +55,7 @@ namespace InGame.Player.Motion
 
         public override string ToString()
         {
-            return Enum.ToObject(_enumType, _type).ToString();
+            return  $"{_groupType.ToString()} / {Enum.ToObject(_enumType, _type).ToString()}";
         }
 
     }

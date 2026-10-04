@@ -20,6 +20,8 @@ namespace InGame.Player.Motion
 
         public void Initialize()
         {
+            if (_animationDictionary.Count > 0) return;
+
             AddDictionary(new BasicMotion(), _basicClip);
             AddDictionary(new SwordMotion(), _swordClip);
             AddDictionary(new EmoteMotion(), _emoteClip);
@@ -49,6 +51,7 @@ namespace InGame.Player.Motion
                 if (data.MaskType == type)
                     return data.Mask;
             }
+
             Debug.LogError(type.ToString() + " is not found");
             return null;
         }

@@ -29,5 +29,5 @@ public class StateMotionData : ScriptableObject
 
 public enum MotionType
 {
-    Free, Sword
+    Free, Sword, Enemy_Footman
 }

@@ -27,7 +27,7 @@ namespace Common.Motion
         private AnimationLayerMixerPlayable _layerMixer;
         private AnimationMixerPlayable _baseMixer;
 
-        private void Start()
+        protected virtual void Start()
         {
             _container.Initialize();
 

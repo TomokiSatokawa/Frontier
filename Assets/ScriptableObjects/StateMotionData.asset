@@ -27,6 +27,13 @@ MonoBehaviour:
       rid: 2115541215392563522
     _runClip:
       rid: 2115541215392563523
+  - _motionType: 2
+    _idleClip:
+      rid: 3847071408440738142
+    _walkClip:
+      rid: 3847071408440738143
+    _runClip:
+      rid: 3847071408440738144
   references:
     version: 2
     RefIds:
@@ -54,3 +61,15 @@ MonoBehaviour:
       type: {class: BasicMotion, ns: Common, asm: Assembly-CSharp}
       data:
         _type: 0
+    - rid: 3847071408440738142
+      type: {class: FootmanMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 0
+    - rid: 3847071408440738143
+      type: {class: FootmanMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 1
+    - rid: 3847071408440738144
+      type: {class: FootmanMotion, ns: Common, asm: Assembly-CSharp}
+      data:
+        _type: 1
